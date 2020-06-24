@@ -1,5 +1,4 @@
 <?php
-//$conn = mysqli_connect("localhost", "root", "", "CRUD") or die( "No se pudo conectar con la base de datos");
 
 class Database{
     private $con;
