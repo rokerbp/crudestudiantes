@@ -1,0 +1,15 @@
+.custom-form{
+    background-color: aliceblue;
+}
+.delete{
+    color: red;
+}
+.delete:hover{
+    color: orangered;
+}
+.edit{
+    color: #2a6842;
+}
+.edit:hover{
+    color: #42a267;
+}
