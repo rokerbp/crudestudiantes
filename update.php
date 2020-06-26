@@ -34,6 +34,7 @@ include 'conexion.php';
         </div>
         <hr>
         <?php
+            $iddpto = 5;
             $estudiantes= new Database();
             if(isset($_POST) && !empty($_POST)){
                 $nombres = $estudiantes->sanitize($_POST['nombres']);
@@ -88,7 +89,7 @@ include 'conexion.php';
                         </div>
                         <div class="form-group">
                                 <label for="departamentoSelect">Departamento de Residencia</label>
-                                <select id="depto" required class="form-control" name="departamentoSelect">
+                                <select id="depto" required class="form-control change" name="departamentoSelect">
                                 <option value="">Seleccione .:.</option>
                                 <?php
                                     $deptos=$estudiantes->readDepto();
@@ -101,18 +102,24 @@ include 'conexion.php';
                                 </select>
                         </div>
                         <div class="form-group">
+                                    <label for="ciudad">Ciudad de Residencia</label>
+                                    <input required name="ciudad" type="text" class="form-control" maxlength="100" aria-describedby="ciudadHelp" placeholder="Ciudad ..." >
+                        </div>
+                        <!--
+                        <div class="form-group">
                         <label for="departamentoSelect">Departamento de Residencia</label>
                             <select id="depto" required class="form-control" name="departamentoSelect">
                             <option value="">Seleccione .:.</option>
                             <?php
-                                $mpos=$estudiantes->readMpo(5);
+                                $idmpo = 5;
+                                $mpos=$estudiantes->readMpo($idmpo);
                                 while ($row=mysqli_fetch_object($mpos)){
                                     $municipio=$row->municipio;
                                     echo '<option value="'.$municipio.'">'.$municipio.'</option>';
                                 }
                             ?>
                             </select>
-                        </div>
+                        </div>-->
                         <hr>
                         <div class="d-flex justify-content-between">
                             <div class="">
@@ -130,6 +137,9 @@ include 'conexion.php';
 <script>
     var tipo = '<?php echo $datos_estudiante->tipodoc ?>';
     var depto = '<?php echo $datos_estudiante->departamento ?>';
+    $("select.change").change(function(){
+        var selectedDepto = $(this).children("option:selected").val();
+    });
     $('#tipoDoc option[value="'+ tipo +'"]').prop("selected", true);
     $('#depto option[value="'+ depto +'"]').prop("selected", true);
 </script>
