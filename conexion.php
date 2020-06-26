@@ -44,7 +44,7 @@ class Database{
     }
 
     public function readMpo($id){
-        $sql = "SELECT * FROM municipios WHERE departamento_id='$id'";
+        $sql = "SELECT municipio FROM municipios WHERE departamento_id='$id'";
         $res = mysqli_query($this->con, $sql);
         return $res;
     }
