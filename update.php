@@ -18,6 +18,7 @@ include 'conexion.php';
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>  
     <link rel="stylesheet" type="text/css" href="css/custom.css">
+    <script type="text/javascript" src="js/jquery.min.js"></script>
     <title>Actualizar</title>
 </head>
 <body>
@@ -42,18 +43,18 @@ include 'conexion.php';
                 $tipodoc = $estudiantes->sanitize($_POST['documentoSelect']);
                 $numdoc = $estudiantes->sanitize($_POST['documento']);
                 $departamento = $estudiantes->sanitize($_POST['departamentoSelect']);
-                $ciudad = $estudiantes->sanitize($_POST['ciudad']);
+                $ciudad = $estudiantes->sanitize($_POST['municipioSelect']);
                 $id=intval($_POST['id_estudiante']);
                 
                 $res = $estudiantes->update($nombres, $apellidos, $tipodoc, $numdoc, $departamento, $ciudad, $id);
                 if($res){
                     $message= "Datos actualizados con éxito";
-                    $class="alert alert-success";
+                    $class="alert alert-success alert-dismissible fade show";
                 }else{
                     $message="No se pudieron actualizar los datos";
-                    $class="alert alert-danger";
+                    $class="alert alert-danger alert-dismissible fade show";
                 }
-                echo '<div class="'.$class.'">'.$message.'</div>';
+                echo '<div class="'.$class.'">'.$message.'<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
             }
             $datos_estudiante=$estudiantes->single_record($id);
         ?>
@@ -96,30 +97,17 @@ include 'conexion.php';
                                     while ($row=mysqli_fetch_object($deptos)){
                                         $id=$row->id_departamento;
                                         $departamento=$row->departamento;
-                                            echo '<option value="'.$departamento.'">'.$departamento.'</option>';
+                                            echo '<option value="'.$id.'">'.$departamento.'</option>';
                                     }
                                 ?>
                                 </select>
                         </div>
                         <div class="form-group">
-                            <label for="ciudad">Ciudad de Residencia</label>
-                            <input required name="ciudad" type="text" class="form-control" aria-describedby="ciudadHelp" placeholder="Ciudad de Residencia..." value="<?php echo $datos_estudiante->ciudad;?>">
-                        </div>
-                        <!--
-                        <div class="form-group">
-                        <label for="departamentoSelect">Departamento de Residencia</label>
-                            <select id="depto" required class="form-control" name="departamentoSelect">
-                            <option value="">Seleccione .:.</option>
-                            <?php
-                                $idmpo = 5;
-                                $mpos=$estudiantes->readMpo($idmpo);
-                                while ($row=mysqli_fetch_object($mpos)){
-                                    $municipio=$row->municipio;
-                                    echo '<option value="'.$municipio.'">'.$municipio.'</option>';
-                                }
-                            ?>
+                        <label for="municipioSelect">Ciudad de Residencia</label>
+                            <select id="municipio" required class="form-control" name="municipioSelect">
+                                <option value="">Seleccione .:.</option>
                             </select>
-                        </div>-->
+                        </div>
                         <hr>
                         <div class="d-flex justify-content-between">
                             <div class="">
@@ -135,13 +123,27 @@ include 'conexion.php';
         </div>
     </div> 
 <script>
+    // Obtenemos los valores desde base de datos
     var tipo = '<?php echo $datos_estudiante->tipodoc ?>';
-    var depto = '<?php echo $datos_estudiante->departamento ?>';
-    $("select.change").change(function(){
-        var selectedDepto = $(this).children("option:selected").val();
+    var depto = '<?php echo $datos_estudiante->departamento_id ?>';
+    var mcpo = '<?php echo $datos_estudiante->ciudad ?>';
+
+    // Marcamos como selected el valor que coincida con el valor de la DB
+    $(document).ready(function(){
+        $('#tipoDoc option[value="'+ tipo +'"]').prop("selected", true);
+        $('#depto option[value="'+ depto +'"]').prop("selected", true);
+        // Cargamos los municipios en el select de acuerdo al departamento guardado en DB
+        $.get("municipios.php","depto_id="+depto, function(data){
+                $("#municipio").html(data);
+                $('#municipio option[value="'+ mcpo +'"]').prop("selected", true);
+            });
+        // Si el usuario selecciona otro departamento, se cargan los municipios de este
+        $("#depto").change(function(){
+            $.get("municipios.php","depto_id="+$("#depto").val(), function(data){
+                $("#municipio").html(data);
+            });
+        });
     });
-    $('#tipoDoc option[value="'+ tipo +'"]').prop("selected", true);
-    $('#depto option[value="'+ depto +'"]').prop("selected", true);
 </script>
 </body>
 </html>

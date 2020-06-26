@@ -48,15 +48,16 @@ include ('conexion.php');
                 $res = $estudiantes->create($nombres, $apellidos, $tipodoc, $numdoc, $departamento, $ciudad);
                 if($res){
                     $message= "Datos insertados con éxito";
-                    $class="alert alert-success";
+                    $class="alert alert-success alert-dismissible fade show";
                 }else{
                     $message="No se pudieron insertar los datos";
-                    $class="alert alert-danger";
+                    $class="alert alert-danger alert-dismissible fade show";
                 }
             
         ?>
         <div class="<?php echo $class?>">
             <?php echo $message;?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>	
             <?php
         }
@@ -102,21 +103,23 @@ include ('conexion.php');
                             <div class="form-group">
                                 
                                     <label for="departamentoSelect">Departamento de Residencia</label>
-                                    <select required class="form-control" name="departamentoSelect">
+                                    <select id="depto" required class="form-control" name="departamentoSelect">
                                     <option value="">Seleccione .:.</option>
                                     <?php
                                         $deptos=$estudiantes->readDepto();
                                         while ($row=mysqli_fetch_object($deptos)){
                                             $id=$row->id_departamento;
                                             $departamento=$row->departamento;
-                                                echo '<option value="'.$departamento.'">'.$departamento.'</option>';
+                                                echo '<option value="'.$id.'">'.$departamento.'</option>';
                                         }
                                     ?>
                                     </select>
                             </div>
                             <div class="form-group">
-                                    <label for="ciudad">Ciudad de Residencia</label>
-                                    <input required name="ciudad" type="text" class="form-control" maxlength="100" aria-describedby="ciudadHelp" placeholder="Ciudad ..." >
+                                <label for="ciudad">Ciudad de Residencia</label>
+                                <select id="municipio" required class="form-control" name="ciudad">
+                                    <option value="">Seleccione .:.</option>
+                                </select>
                             </div>
                             <hr>
                             <div class="d-flex justify-content-between">
@@ -183,6 +186,12 @@ include ('conexion.php');
             "pagingType": "simple_numbers" 
         });
         $('.dataTables_length').addClass('bs-select');
+
+        $("#depto").change(function(){
+            $.get("municipios.php","depto_id="+$("#depto").val(), function(data){
+                $("#municipio").html(data);
+            });
+        });
     }); 
 
     // Delete 

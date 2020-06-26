@@ -22,7 +22,7 @@ class Database{
     }
 
     public function create($nombres,$apellidos,$tipodoc,$numdoc,$departamento,$ciudad){
-        $sql = "INSERT INTO `estudiantes` (nombres, apellidos, tipodoc, numdoc, departamento, ciudad) VALUES ('$nombres', '$apellidos', '$tipodoc', '$numdoc', '$departamento', '$ciudad')";
+        $sql = "INSERT INTO `estudiantes` (nombres, apellidos, tipodoc, numdoc, departamento_id, ciudad) VALUES ('$nombres', '$apellidos', '$tipodoc', '$numdoc', '$departamento', '$ciudad')";
         $res = mysqli_query($this->con, $sql);
         if($res){
           return true;
@@ -32,7 +32,7 @@ class Database{
     }
     
     public function read(){
-    $sql = "SELECT * FROM estudiantes";
+    $sql = "SELECT * FROM estudiantes INNER JOIN departamentos ON estudiantes.departamento_id = departamentos.id_departamento";
     $res = mysqli_query($this->con, $sql);
     return $res;
     }
@@ -56,7 +56,7 @@ class Database{
         return $return ;
     }
     public function update($nombres,$apellidos,$tipodoc,$numdoc,$departamento, $ciudad, $id){
-        $sql = "UPDATE estudiantes SET nombres='$nombres', apellidos='$apellidos', tipodoc='$tipodoc', numdoc='$numdoc', departamento='$departamento', ciudad='$ciudad' WHERE id=$id";
+        $sql = "UPDATE estudiantes SET nombres='$nombres', apellidos='$apellidos', tipodoc='$tipodoc', numdoc='$numdoc', departamento_id='$departamento', ciudad='$ciudad' WHERE id=$id";
         $res = mysqli_query($this->con, $sql);
         if($res){
             return true;
