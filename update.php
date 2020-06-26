@@ -102,8 +102,8 @@ include 'conexion.php';
                                 </select>
                         </div>
                         <div class="form-group">
-                                    <label for="ciudad">Ciudad de Residencia</label>
-                                    <input required name="ciudad" type="text" class="form-control" maxlength="100" aria-describedby="ciudadHelp" placeholder="Ciudad ..." >
+                            <label for="ciudad">Ciudad de Residencia</label>
+                            <input required name="ciudad" type="text" class="form-control" aria-describedby="ciudadHelp" placeholder="Ciudad de Residencia..." value="<?php echo $datos_estudiante->ciudad;?>">
                         </div>
                         <!--
                         <div class="form-group">
