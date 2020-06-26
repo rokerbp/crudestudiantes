@@ -32,6 +32,7 @@ include 'conexion.php';
                 </div>
             </div>
         </div>
+        <hr>
         <?php
             $estudiantes= new Database();
             if(isset($_POST) && !empty($_POST)){
@@ -55,60 +56,71 @@ include 'conexion.php';
             }
             $datos_estudiante=$estudiantes->single_record($id);
         ?>
-        <div class="container custom-form">
-            <div class="row py-5">
-                <div class="col-md-10 mx-auto">
+        <div class="container col-md-8 custom-form">
+            <div class="row  py-5">
+                <div class="col-md-8 mx-auto">
                     <form method="post">
-                        <div class="form-group row">
-                            <div class="col-sm-6">
+                        <div class="form-group">
+                            
                                 <label>Nombres:</label>
                                 <input type="text" name="nombres" id="nombres" class='form-control' maxlength="100" required  value="<?php echo $datos_estudiante->nombres;?>">
                                 <input type="hidden" name="id_estudiante" id="id_estudiante" class='form-control' maxlength="100"   value="<?php echo $datos_estudiante->id;?>">
-                            </div>
-                            <div class="col-sm-6">
+                        </div>
+                        <div class="form-group">
                                 <label>Apellidos:</label>
                                 <input type="text" name="apellidos" id="apellidos" class='form-control' maxlength="100" required value="<?php echo $datos_estudiante->apellidos;?>">
-                            </div>
+                            
                         </div>
                         <div class="form-group row">
-                            <div class="col-sm-5">
+                            <div class="col-sm-6">
                                 <label for="documentoSelect">Tipo Documento</label>
                                 <select required id="tipoDoc" class="form-control" name="documentoSelect">
-                                    <option value="">Seleccione Tipo de Documento .:.</option>
+                                    <option value="">Seleccione .:.</option>
                                     <option value="CC">Cédula de ciudadanía</option>
                                     <option value="TI">Tarjeta de Identidad</option>
                                     <option value="CE">Cédula de extranjería</option>
                                 </select>
                             </div>
-                            <div class="col-sm-7">
+                            <div class="col-sm-6">
                                 <label for="documento">Número de documento</label>
                                 <input required name="documento" type="text" class="form-control"  placeholder="# de documento..." value="<?php echo $datos_estudiante->numdoc;?>">
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <div class="col-sm-6">
+                        <div class="form-group">
                                 <label for="departamentoSelect">Departamento de Residencia</label>
                                 <select id="depto" required class="form-control" name="departamentoSelect">
-                                <option value="">Seleccione Departamento .:.</option>
+                                <option value="">Seleccione .:.</option>
                                 <?php
                                     $deptos=$estudiantes->readDepto();
                                     while ($row=mysqli_fetch_object($deptos)){
                                         $id=$row->id_departamento;
                                         $departamento=$row->departamento;
-                                            echo "<option value=".$departamento.">".$departamento."</option>";
+                                            echo '<option value="'.$departamento.'">'.$departamento.'</option>';
                                     }
                                 ?>
                                 </select>
-                            </div>
-                            <div class="col-sm-6">
-                                <label for="name">Ciudad de Residencia</label>
-                                <input required name="ciudad" type="text" class="form-control" aria-describedby="ciudadHelp" placeholder="Ciudad de Residencia..." value="<?php echo $datos_estudiante->ciudad;?>">
-                            </div>
                         </div>
-                        
-                        <div class="col-md-12 pull-right">
+                        <div class="form-group">
+                        <label for="departamentoSelect">Departamento de Residencia</label>
+                            <select id="depto" required class="form-control" name="departamentoSelect">
+                            <option value="">Seleccione .:.</option>
+                            <?php
+                                $mpos=$estudiantes->readMpo(5);
+                                while ($row=mysqli_fetch_object($mpos)){
+                                    $municipio=$row->municipio;
+                                    echo '<option value="'.$municipio.'">'.$municipio.'</option>';
+                                }
+                            ?>
+                            </select>
+                        </div>
                         <hr>
-                            <button type="submit" class="btn btn-success">Actualizar datos</button>
+                        <div class="d-flex justify-content-between">
+                            <div class="">
+                                <a href="index.php" class="btn btn-secondary add-new"><i class="fa fa-arrow-left"></i> Cancelar</a>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-success"><i class="material-icons pull-left">upgrade</i> Actualizar Datos</button>
+                            </div>
                         </div>
                     </form>
                 </div>

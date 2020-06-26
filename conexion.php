@@ -43,6 +43,12 @@ class Database{
     return $res;
     }
 
+    public function readMpo($id){
+        $sql = "SELECT * FROM municipios WHERE departamento_id='$id'";
+        $res = mysqli_query($this->con, $sql);
+        return $res;
+    }
+
     public function single_record($id){
         $sql = "SELECT * FROM estudiantes where id='$id'";
         $res = mysqli_query($this->con, $sql);

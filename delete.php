@@ -1,5 +1,5 @@
 <?php 
-// Si se desea hacer con get mediante un botón sin confirmación
+// Si se desea hacer con get mediante un botón sin confirmacióne
 /*if (isset($_GET['id'])){
 	include('conexion.php');
 	$estudiante = new Database();
