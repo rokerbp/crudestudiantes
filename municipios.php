@@ -6,7 +6,7 @@ $munic=$municipios->readMpo($id);
 print "<option value=''>Selecione .:.</option>";
 while ($row=mysqli_fetch_object($munic)){
     $municipio=$row->municipio;
-    echo $municipio;
+    //echo $municipio;
     print "<option value='$municipio'>$municipio</option>";
 }
 ?>
