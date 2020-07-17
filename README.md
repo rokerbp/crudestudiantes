@@ -1,6 +1,6 @@
 # CRUD ESTUDIANTES
 
-Este es un crud sencillo hecho en PHP, permite hacer CRUD sobre un listado de estudiantes.
+Este es un crud sencillo hecho en PHP, permite hacer CRUD sobre un listado de estudiantes con selección de Departamento y Municipio de origen (Datos de Colombia).
 
 ## Installation
 
@@ -9,12 +9,17 @@ Utilizar el sql del archivo database.sql para generar la base de datos, la cual 
 
 Requiere PHP 7.0 y MySQL 5.7
 
-Para clonarlo solo hacer:
+Para clonarlo:
 
 ```bash
-git clone <repoUrl>
+git clone https://github.com/rokerbp/crudestudiantes.git
 ```
-Usar database.sql para crear la base de datos
+
+Funciones:
+- Ver estudiantes
+- Agregar estudiante
+- Editar/Actualizar estudiante
+- Eliminar estudiante
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
