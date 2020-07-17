@@ -14,6 +14,7 @@ Para clonarlo solo hacer:
 ```bash
 git clone <repoUrl>
 ```
+Usar database.sql para crear la base de datos
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
